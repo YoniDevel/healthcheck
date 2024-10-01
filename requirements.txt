@@ -1,0 +1,6 @@
+mypy
+motor
+fastapi
+pymongo
+pydantic
+python-dotenv
