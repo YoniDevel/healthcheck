@@ -1,12 +1,13 @@
-from bson import ObjectId
 from datetime import date
-from pydantic import EmailStr
-from typing import List, TypedDict, NotRequired
+from typing import Annotated, List, Optional
+from pydantic import BaseModel, BeforeValidator, EmailStr, Field
 
 from src.models.appointment import Appointment
 
-class User(TypedDict):
-    _id: NotRequired[ObjectId]
+PyObjectId = Annotated[str, BeforeValidator(str)]
+
+class User(BaseModel):
+    id: Optional[PyObjectId] = Field(alias="_id", default=None)
     firstName: str
     lastName: str
     dateOfBirth: date
