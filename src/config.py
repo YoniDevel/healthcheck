@@ -1,7 +1,6 @@
 import os
-from typing import Annotated
 from dotenv import load_dotenv
-from pydantic import Field, BaseModel, MongoDsn
+from pydantic import BaseModel, MongoDsn
 
 load_dotenv()
 
@@ -18,5 +17,3 @@ def parse_config() -> Config:
     return Config(**config)
 
 parsed_config = parse_config()
-
-print(parsed_config)
