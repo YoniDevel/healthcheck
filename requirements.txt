@@ -1,0 +1,7 @@
+mypy
+pytest
+geojson
+fastapi
+pymongo
+pydantic
+python-dotenv
