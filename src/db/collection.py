@@ -1,9 +1,7 @@
-import logging
 from pydantic import BaseModel
 from pymongo import ReturnDocument
 from typing import Generic, Optional, Type, TypeVar
 from pymongo.results import InsertOneResult, DeleteResult
-from pymongo.asynchronous.collection import AsyncCollection
 
 from src.db.connection import get_collection
 
