@@ -4,7 +4,7 @@ from typing import Annotated, List, Optional
 from pydantic import Field, BaseModel, EmailStr, BeforeValidator, field_validator
 
 from src.models.appointment import Appointment
-from utils.control_digit import calc_control_digit
+from src.utils.control_digit import calc_control_digit
 
 PyObjectId = Annotated[str, BeforeValidator(str)]
 
@@ -13,7 +13,7 @@ class ClalitDetails(BaseModel):
     password: str
 
 class User(BaseModel):
-    _id: str = Field(pattern=r'^\d{2,9}$')
+    id: str = Field(pattern=r'^\d{2,9}$', alias='_id')
     firstName: str
     lastName: str
     dateOfBirth: date
@@ -25,7 +25,7 @@ class User(BaseModel):
     updatedAt: Optional[date]
     cityOfResidence: str
 
-    @field_validator('_id')
+    @field_validator('_id', check_fields=False)
     @classmethod
     def validate_id_control_digit(cls, _id: str) -> str:
         control_digit = calc_control_digit(_id)

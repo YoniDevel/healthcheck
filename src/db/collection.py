@@ -23,7 +23,7 @@ class CollectionOperations(ABC, Generic[T]):
         return result.inserted_id
     
     async def insert_many(self, documents: list[T]) -> list[str]:
-        inserted_ids = list(map(lambda doc: await self.insert_one(doc), documents))
+        inserted_ids = [await self.insert_one(doc) for doc in documents]
         return inserted_ids
     
     async def find_one(self, filter: dict) -> Optional[T]:

@@ -13,7 +13,7 @@ def create_random_valid_id() -> str:
 
 def create_random_user() -> User:
     return User(**{
-        '_id': create_random_valid_id(),
+        'id': create_random_valid_id(),
         'firstName': faker.first_name(),
         'lastName': faker.last_name(),
         'dateOfBirth': faker.date_of_birth(minimum_age=1, maximum_age=120),
