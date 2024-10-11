@@ -1,14 +1,12 @@
 from datetime import date
-from typing import TypedDict
-from geojson import Point
-from pydantic import BaseModel, PositiveInt, TypeAdapter
+from pydantic import BaseModel, Field, PositiveInt
 
 class Visit(BaseModel):
     date: date
-    location: int
+    city: str
 
 class Appointment(BaseModel):
     name: str # To be replaced by an enum soon
-    frequency: PositiveInt
+    frequency: PositiveInt = Field(description='The frequency of the appointment (every *frequency* days)')
     lastVisit: Visit
     nextVisit: Visit

@@ -1,13 +1,19 @@
+import logging
 from datetime import date
 from typing import Annotated, List, Optional
-from pydantic import BaseModel, BeforeValidator, EmailStr, Field
+from pydantic import Field, BaseModel, EmailStr, BeforeValidator, field_validator
 
 from src.models.appointment import Appointment
+from utils.control_digit import calc_control_digit
 
 PyObjectId = Annotated[str, BeforeValidator(str)]
 
+class ClalitDetails(BaseModel):
+    userCode: str
+    password: str
+
 class User(BaseModel):
-    id: Optional[PyObjectId] = Field(alias="_id", default=None)
+    _id: str = Field(pattern=r'^\d{2,9}$')
     firstName: str
     lastName: str
     dateOfBirth: date
@@ -15,5 +21,15 @@ class User(BaseModel):
     clalitUserCode: str
     clalitPassword: str
     appointments: List[Appointment]
-    createdAt: date
-    updatedAt: date
+    createdAt: Optional[date]
+    updatedAt: Optional[date]
+    cityOfResidence: str
+
+    @field_validator('_id')
+    @classmethod
+    def validate_id_control_digit(cls, _id: str) -> str:
+        control_digit = calc_control_digit(_id)
+        if (control_digit != _id[8]):
+            logging.error(f'Control digit for id {_id} is not correct')
+            raise ValueError(f'Control digit for id {_id} is not correct')
+        return _id

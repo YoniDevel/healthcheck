@@ -9,7 +9,7 @@ config = {
     'DB_NAME': os.getenv('DB_NAME'),
     'MONGO_URI': os.getenv('MONGO_URI') or '',
     'API_HOST': os.getenv('API_HOST'),
-    'API_PORT': os.getenv('API_PORT')
+    'API_PORT': int(os.getenv('API_PORT') or '')
 }
 
 class Config(BaseModel):

@@ -2,7 +2,6 @@ from fastapi import status
 from fastapi.testclient import TestClient
 
 from src.app import create_app
-from src.config import parsed_config
 
 app = create_app()
 client = TestClient(app)
