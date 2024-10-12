@@ -1,7 +1,8 @@
 def calc_control_digit(_id: str) -> int:
-    _id = _id.zfill(9 - len(_id)) if len(_id) != 9 else _id
+    id_length = len(_id)
+    _id = _id.zfill(9 - id_length) if id_length != 9 else _id
     total = 0       
-    for i in range(8):
+    for i in range(id_length):
         val = int(_id[i])
         if i % 2 == 0:
             total += val

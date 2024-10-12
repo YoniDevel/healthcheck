@@ -1,5 +1,5 @@
 import logging
-from datetime import date
+from datetime import datetime
 from typing import Annotated, List, Optional
 from pydantic import Field, BaseModel, EmailStr, BeforeValidator, field_validator
 
@@ -16,14 +16,14 @@ class User(BaseModel):
     id: str = Field(pattern=r'^\d{2,9}$', alias='_id')
     firstName: str
     lastName: str
-    dateOfBirth: date
+    dateOfBirth: datetime
     email: EmailStr
     clalitUserCode: str
     clalitPassword: str
     appointments: List[Appointment]
-    createdAt: Optional[date]
-    updatedAt: Optional[date]
     cityOfResidence: str
+    createdAt: Optional[datetime] = None
+    updatedAt: Optional[datetime] = None
 
     @field_validator('_id', check_fields=False)
     @classmethod

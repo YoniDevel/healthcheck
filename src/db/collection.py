@@ -16,9 +16,11 @@ class CollectionOperations(ABC, Generic[T]):
         self.collection = get_collection(self.collection_name)
                
     async def insert_one(self, document: T) -> str:
+        doc_to_insert = document.model_dump(by_alias=True)
         result = await self.collection.insert_one({
-            **document.model_dump(),
-            'createdAt': datetime.now()
+            **doc_to_insert,
+            'createdAt': datetime.now(),
+            'updatedAt': datetime.now()
         })
         return result.inserted_id
     
@@ -31,7 +33,8 @@ class CollectionOperations(ABC, Generic[T]):
     
     async def find(self, filter: dict, options: dict = {}) -> list[T]:
         documents = await self.collection.find(filter, **options).to_list()
-        return list(map(lambda document: self.cls(**document), documents))
+        return documents
+        # return list(map(lambda document: self.cls(**document), documents))
     
     async def update_one(self, filter: dict, update: dict, options: dict = {}) -> T:
         result = await self.collection.find_one_and_update(
@@ -48,3 +51,6 @@ class CollectionOperations(ABC, Generic[T]):
     async def delete_one(self, filter: dict) -> DeleteResult:
         result = await self.collection.delete_one(filter)
         return result
+    
+    async def delete_many(self, filter: dict) -> None:
+        await self.collection.delete_many(filter)

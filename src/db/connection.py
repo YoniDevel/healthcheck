@@ -18,8 +18,7 @@ T = TypeVar('T', bound=Mapping[str, None])
 
 def connect_client() -> None:
     if not internals.client:
-        client = AsyncMongoClient(str(parsed_config.MONGO_URI))
-        internals.client = client
+        internals.client = AsyncMongoClient(str(parsed_config.MONGO_URI))
 
 def connect_db(db_name: str) -> None:
     if not internals.client:

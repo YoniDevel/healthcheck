@@ -1,8 +1,8 @@
-from datetime import date
+from datetime import datetime
 from pydantic import BaseModel, Field, PositiveInt
 
 class Visit(BaseModel):
-    date: date
+    date: datetime
     city: str
 
 class Appointment(BaseModel):

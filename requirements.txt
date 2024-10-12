@@ -9,4 +9,3 @@ pymongo
 pydantic
 python-dotenv
 email_validator
-pytest-docker-compose
