@@ -36,3 +36,7 @@ def get_collection(collection_name: str, db_name: str = parsed_config.DB_NAME) -
 def setup_db(db_name: str | None = None) -> None:
     connect_client()
     connect_db(db_name or parsed_config.DB_NAME)
+
+def disconnect_mongo() -> None:
+    if internals.client:
+        internals.client = None
