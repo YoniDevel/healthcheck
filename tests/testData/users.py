@@ -29,11 +29,14 @@ def create_random_user() -> dict:
     }
 
 
-def create_random_user_to_insert() -> dict:
+def create_random_user_dict_to_insert() -> dict:
     user_to_insert = create_random_user()
     del user_to_insert['createdAt']
     del user_to_insert['updatedAt']
     return user_to_insert
+
+def create_random_user_model_to_insert() -> User:
+    return User(**create_random_user_dict_to_insert())
 
 def edit_user_for_assertions(user: dict) -> dict:
     user_for_assertion = User(**user).model_dump(by_alias=True)

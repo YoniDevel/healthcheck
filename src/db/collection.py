@@ -34,7 +34,6 @@ class CollectionOperations(ABC, Generic[T]):
     async def find(self, filter: dict, options: dict = {}) -> list[T]:
         documents = await self.collection.find(filter, **options).to_list()
         return documents
-        # return list(map(lambda document: self.cls(**document), documents))
     
     async def update_one(self, filter: dict, update: dict, options: dict = {}) -> T:
         result = await self.collection.find_one_and_update(
