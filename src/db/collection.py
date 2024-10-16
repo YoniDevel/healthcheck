@@ -40,7 +40,10 @@ class CollectionOperations(ABC, Generic[T]):
             filter, 
             {
                 **update,
-                'updatedAt': datetime.now()
+                '$set': {
+                    **update.get('$set', {}),
+                    'updatedAt': datetime.now()
+                }
             },
             return_document=ReturnDocument.AFTER,
             **options or {}

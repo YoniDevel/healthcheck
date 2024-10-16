@@ -33,7 +33,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest -vv --diable-warnings
+        pytest -vv --disable-warnings
 
     - name: Check test results
       run: |

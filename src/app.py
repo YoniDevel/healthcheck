@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, HTTPException, Request, status
 from typing import Any, AsyncGenerator
 from pymongo.errors import PyMongoError
 from contextlib import asynccontextmanager
@@ -30,6 +30,15 @@ def create_app() -> FastAPI:
             "body": exc.body
         }
     )
+        
+    @app.exception_handler(HTTPException)
+    async def http_exception_handler(_: Request, exc: HTTPException) -> JSONResponse:
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={
+                "message": exc.detail
+            }
+        )
 
     @app.exception_handler(PyMongoError)
     async def mongo_error_exception_handler(_: Request, exc: PyMongoError) -> JSONResponse:

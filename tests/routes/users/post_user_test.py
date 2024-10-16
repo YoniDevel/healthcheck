@@ -17,7 +17,6 @@ async def setup_and_teardown() -> AsyncGenerator[None, Any]:
     await UsersCollection().delete_many({})
     disconnect_mongo()
    
-@pytest.mark.asyncio
 async def test_post_user_regular_case() -> None:
     user = create_random_user_dict_to_insert()
     
@@ -29,7 +28,6 @@ async def test_post_user_regular_case() -> None:
     assert response.status_code == status.HTTP_201_CREATED
     assert inserted_user == [user_for_comparison]
 
-@pytest.mark.asyncio
 async def test_post_user_regular_case_multiple_users() -> None:
     users = [create_random_user_dict_to_insert() for _ in range(10)]
     
@@ -38,7 +36,6 @@ async def test_post_user_regular_case_multiple_users() -> None:
     assert response.status_code == status.HTTP_201_CREATED
     assert len(response.json()) == len(users)
 
-@pytest.mark.asyncio
 async def test_post_user_bad_user_inserted() -> None:
     bad_user = create_random_user_dict_to_insert()
     del bad_user['firstName']

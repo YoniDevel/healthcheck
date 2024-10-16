@@ -20,7 +20,7 @@ class User(BaseModel):
     email: EmailStr
     clalitUserCode: str
     clalitPassword: str
-    appointments: List[Appointment]
+    appointments: List[Appointment] = Field(default=[])
     cityOfResidence: str
     createdAt: Optional[datetime] = None
     updatedAt: Optional[datetime] = None

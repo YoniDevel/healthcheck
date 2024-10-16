@@ -22,7 +22,7 @@ def create_random_user() -> dict:
         'email': faker.email(),
         'clalitUserCode': faker.user_name(),
         'clalitPassword': faker.password(),
-        'appointments': [create_random_appointment()] * 2,
+        'appointments': [create_random_appointment() for _ in range(3)],
         'cityOfResidence': faker.city(),
         'createdAt': datetime.now().isoformat(),
         'updatedAt': datetime.now().isoformat()
