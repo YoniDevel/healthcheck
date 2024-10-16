@@ -1,0 +1,8 @@
+{
+    "name": "Python: pytest",
+    "type": "python",
+    "request": "launch",
+    "program": "${workspaceFolder}/tests",
+    "args": ["-m", "pytest", "--maxfail=1", "--disable-warnings"],
+    "justMyCode": false
+}
