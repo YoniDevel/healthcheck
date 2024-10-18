@@ -1,0 +1,5 @@
+{
+  "python.terminal.activateEnvironment": true,
+  "terminal.integrated.environmentChangesRelaunch": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+}
