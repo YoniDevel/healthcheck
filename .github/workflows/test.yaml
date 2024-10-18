@@ -1,9 +1,9 @@
-name: LeetCode CI
+name: Test
 
 on:
   push:
     branches:
-      - "**"
+      - "master"
 
 jobs:
   build:
@@ -15,16 +15,25 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.12.3'
+        python-version: '3.12.7'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Set up Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
+
+    - name: Export PYTHONPATH
+      run: |
+        export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
+
     - name: Run tests
       run: |
-        python -m pytest
+        pytest -vv --disable-warnings
 
     - name: Check test results
       run: |

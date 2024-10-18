@@ -1,41 +1,41 @@
-import logging
-from pydantic import BaseModel
 from pymongo import AsyncMongoClient
-from typing import Mapping, Optional, TypeVar
-from pymongo.asynchronous.database import AsyncDatabase
 from pymongo.asynchronous.collection import AsyncCollection
 
-from config import parsed_config
+from src.utils.logger import logger
+from src.config import parsed_config
 
-class DBInternals(BaseModel):
-    client: Optional[AsyncMongoClient]
-    db: Optional[AsyncDatabase]
+class DBInternals():
+    def __init__(self, client: AsyncMongoClient | None = None, dbs: dict = {}) -> None:
+        self.client = client
+        self.dbs = dbs
 
-internals = DBInternals(
-    client = None,
-    db = None
-)
-
-T = TypeVar('T', bound=Mapping[str, None])
+internals = {
+    "client": None,
+    "dbs": {}
+}
 
 def connect_client() -> None:
-    if not internals.client:
-        client = AsyncMongoClient(str(parsed_config.MONGO_URI))
-        internals.client = client
+    if not internals['client']:
+        internals['client'] = AsyncMongoClient(str(parsed_config.MONGO_URI))
 
-def connect_db() -> None:
-    if not internals.client:
-        logging.error('Cannot connect to db because client does not exist')
+def connect_db(db_name: str) -> None:
+    if not internals['client']:
+        logger.error('Cannot connect to db because client does not exist')
         raise Exception('Cannot connect to db because client does not exist')
-    internals.db = internals.client[parsed_config.DB_NAME]
+    internals['dbs'][db_name] = internals['client'][db_name]
 
-def get_collection(collection_name: str) -> AsyncCollection:
-    if internals.db is not None:
-        return internals.db[collection_name]
+def get_collection(collection_name: str, db_name: str = parsed_config.DB_NAME) -> AsyncCollection:
+    if db_name in internals['dbs']:
+        return internals['dbs'][db_name][collection_name]
     else:
-        logging.error('Cannot return collection when db is not connected')
+        logger.error('Cannot return collection when db is not connected')
         raise Exception('Cannot return collection when db is not connected')
 
-def setup_db() -> None:
+def connect_mongo(db_name: str | None = None) -> None:
     connect_client()
-    connect_db()
+    connect_db(db_name or parsed_config.DB_NAME)
+
+def disconnect_mongo() -> None:
+    if internals['client']:
+        internals['client'] = None
+        internals['dbs'] = {}

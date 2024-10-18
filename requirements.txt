@@ -1,7 +1,11 @@
 mypy
+faker
+httpx
 pytest
+uvicorn
 geojson
 fastapi
 pymongo
 pydantic
 python-dotenv
+email_validator
