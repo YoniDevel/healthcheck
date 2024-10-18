@@ -1,19 +1,19 @@
-from fastapi import FastAPI, HTTPException, Request, status
 from typing import Any, AsyncGenerator
 from pymongo.errors import PyMongoError
-from contextlib import asynccontextmanager
 from fastapi.responses import JSONResponse
+from contextlib import asynccontextmanager
 from fastapi.exceptions import RequestValidationError
+from fastapi import FastAPI, HTTPException, Request, status
 
 from src.config import parsed_config
 from src.routes.basic import basic_router
 from src.routes.users import users_router
-from src.db.connection import disconnect_mongo, setup_db
+from src.db.connection import disconnect_mongo, connect_mongo
 
 def create_app() -> FastAPI:
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncGenerator[None, Any]:
-        setup_db()
+        connect_mongo()
         yield
         disconnect_mongo()
     
