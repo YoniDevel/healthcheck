@@ -1,2 +1,2 @@
 # healthcheck
-A server which remindes me to make medical appointments on time.
+A server which makea my medical appointments on time.
