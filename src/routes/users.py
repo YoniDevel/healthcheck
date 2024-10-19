@@ -1,9 +1,8 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import status, APIRouter, HTTPException
 
-from src.models.user import User
-from src.utils.logger import logger
-from src.models.appointment import Appointment
-from src.db.collections.users import UsersCollection
+from ..utils import logger
+from ..mongo_collections import UsersCollection
+from ..models import User, Appointment
 
 users_router = APIRouter(prefix='/users')
 users_collection = UsersCollection

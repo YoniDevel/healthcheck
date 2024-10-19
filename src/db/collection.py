@@ -5,7 +5,7 @@ from pymongo import ReturnDocument
 from pymongo.results import DeleteResult
 from typing import Generic, Optional, Type, TypeVar
 
-from src.db.connection import get_collection
+from .connection import get_collection
 
 T = TypeVar('T', bound=BaseModel)
 

@@ -1,5 +1,5 @@
-from src.models.user import User
-from src.db.collection import CollectionOperations
+from ..models import User
+from ..db import CollectionOperations
 
 class UsersCollection(CollectionOperations):
     def __init__(self) -> None:

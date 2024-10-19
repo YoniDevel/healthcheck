@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from pydantic import BaseModel, MongoDsn, Field
+from pydantic import Field, MongoDsn, BaseModel
 
 load_dotenv()
 
@@ -9,7 +9,7 @@ config = {
     'DB_NAME': os.getenv('DB_NAME'),
     'MONGO_URI': os.getenv('MONGO_URI') or '',
     'API_HOST': os.getenv('API_HOST'),
-    'API_PORT': int(os.getenv('API_PORT') or '')
+    'API_PORT': int(os.getenv('API_PORT') or '3000')
 }
 
 class Config(BaseModel):
