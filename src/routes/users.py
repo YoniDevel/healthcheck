@@ -29,7 +29,7 @@ async def post_users(users: list[User]) -> list[str]:
 @users_router.get('/{id}')
 async def get_user_by_id(id: str) -> User:
     try:
-        logger.info(f"Getting a user by id: {id}")
+        logger.info(f'Getting a user by id: {id}')
         user = await UsersCollection().find_one({"_id": id})
         if not user:
             raise HTTPException(
