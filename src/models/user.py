@@ -2,9 +2,8 @@ from datetime import datetime
 from typing import Annotated, List, Optional
 from pydantic import Field, BaseModel, EmailStr, BeforeValidator, field_validator
 
-from src.utils.logger import logger
-from src.models.appointment import Appointment
-from src.utils.control_digit import calc_control_digit
+from .appointment import Appointment
+from ..utils import logger, calc_control_digit
 
 PyObjectId = Annotated[str, BeforeValidator(str)]
 

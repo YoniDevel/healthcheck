@@ -1,8 +1,6 @@
 import random
 from faker import Faker
 
-from src.models.appointment import Appointment
-
 faker = Faker()
 
 def create_random_appointment() -> dict:

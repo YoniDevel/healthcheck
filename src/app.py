@@ -3,12 +3,11 @@ from pymongo.errors import PyMongoError
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from fastapi.exceptions import RequestValidationError
-from fastapi import FastAPI, HTTPException, Request, status
+from fastapi import status, FastAPI, Request, HTTPException
 
-from src.config import parsed_config
-from src.routes.basic import basic_router
-from src.routes.users import users_router
-from src.db.connection import disconnect_mongo, connect_mongo
+from .config import parsed_config
+from .routes import basic_router, users_router
+from .db import disconnect_mongo, connect_mongo
 
 def create_app() -> FastAPI:
     @asynccontextmanager

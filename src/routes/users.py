@@ -1,9 +1,8 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import status, APIRouter, HTTPException
 
-from src.models.user import User
-from src.utils.logger import logger
-from src.models.appointment import Appointment
-from src.db.collections.users import UsersCollection
+from ..utils import logger
+from ..mongo_collections import UsersCollection
+from ..models import User, Appointment
 
 users_router = APIRouter(prefix='/users')
 users_collection = UsersCollection
@@ -30,7 +29,7 @@ async def post_users(users: list[User]) -> list[str]:
 @users_router.get('/{id}')
 async def get_user_by_id(id: str) -> User:
     try:
-        logger.info(f"Getting a user by id: {id}")
+        logger.info(f'Getting a user by id: {id}')
         user = await UsersCollection().find_one({"_id": id})
         if not user:
             raise HTTPException(

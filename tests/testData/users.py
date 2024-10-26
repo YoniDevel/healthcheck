@@ -1,10 +1,9 @@
-from datetime import datetime
 import random
-from typing import Any
 from faker import Faker
+from datetime import datetime
 
-from src.models.user import User
-from src.utils.control_digit import calc_control_digit
+from src.models import User
+from src.utils import calc_control_digit
 from tests.testData.appointments import create_random_appointment
 
 faker = Faker()

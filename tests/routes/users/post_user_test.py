@@ -3,10 +3,10 @@ from fastapi import status
 from typing import Any, AsyncGenerator
 from httpx import ASGITransport, AsyncClient
 
-from src.app import app
-from src.db.collections.users import UsersCollection
-from src.db.connection import disconnect_mongo, connect_mongo
-from tests.testData.users import create_random_user_dict_to_insert, edit_user_for_assertions
+from src import app
+from src.mongo_collections import UsersCollection
+from src.db import connect_mongo, disconnect_mongo
+from tests.testData import create_random_user_dict_to_insert, edit_user_for_assertions
 
 client = AsyncClient(transport=ASGITransport(app=app), base_url="http://test")
 

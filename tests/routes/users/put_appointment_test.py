@@ -1,13 +1,12 @@
 import pytest
 from fastapi import status
 from typing import Any, AsyncGenerator
-from httpx import ASGITransport, AsyncClient
+from httpx import AsyncClient, ASGITransport
 
-from src.app import app
-from src.db.collections.users import UsersCollection
-from src.db.connection import disconnect_mongo, connect_mongo
-from tests.testData.appointments import create_random_appointment
-from tests.testData.users import create_random_user_model_to_insert
+from src import app
+from src.mongo_collections import UsersCollection
+from src.db import connect_mongo, disconnect_mongo
+from tests.testData import create_random_appointment, create_random_user_model_to_insert
 
 client = AsyncClient(transport=ASGITransport(app=app), base_url="http://test")
 
