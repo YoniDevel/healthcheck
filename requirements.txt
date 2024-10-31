@@ -7,5 +7,6 @@ geojson
 fastapi
 pymongo
 pydantic
+playwright
 python-dotenv
 email_validator

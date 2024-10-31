@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from pydantic import Field, MongoDsn, BaseModel
+from pydantic import Field, HttpUrl, MongoDsn, BaseModel
 
 load_dotenv()
 
@@ -9,7 +9,8 @@ config = {
     'DB_NAME': os.getenv('DB_NAME'),
     'MONGO_URI': os.getenv('MONGO_URI') or '',
     'API_HOST': os.getenv('API_HOST'),
-    'API_PORT': int(os.getenv('API_PORT') or '3000')
+    'API_PORT': int(os.getenv('API_PORT') or '3000'),
+    'CLALIT_BASE_URL': os.getenv('CLALIT_BASE_URL')
 }
 
 class Config(BaseModel):
@@ -18,6 +19,7 @@ class Config(BaseModel):
     MONGO_URI: MongoDsn
     API_HOST: str
     API_PORT: int = Field(gt=0, lt=65535)
+    CLALIT_BASE_URL: HttpUrl
 
 def parse_config() -> Config:
     return Config(**config)

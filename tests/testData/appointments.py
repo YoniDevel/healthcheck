@@ -1,12 +1,19 @@
 import random
 from faker import Faker
 
+from src.models import ConsultingMedicineSpecializations, DentistrySpecializations
+
 faker = Faker()
 
 def create_random_appointment() -> dict:
     date_of_last_visit = faker.date_time_this_year()
     return {
-        'name': random.choice(['skin', 'eyes', 'dentist', 'chiropractor']),
+        'specialization': {
+            'name': random.choice(
+                list(ConsultingMedicineSpecializations.__members__.keys()) + 
+                list(DentistrySpecializations.__members__.keys())
+            ).lower()
+        },
         'frequency': faker.random_int(min=30, max=365),
         'lastVisit': {
             'date': date_of_last_visit.isoformat(),

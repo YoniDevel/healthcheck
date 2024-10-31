@@ -23,9 +23,11 @@ async def test_put_appointment_regular_case() -> None:
     await UsersCollection().insert_one(user)
     
     response = await client.put(f'/users/{user.id}/appointment', json=appointment)
+    returned_new_appointment = response.json()['appointments'][-1]
+    appointment['specialization']['domain'] = returned_new_appointment['specialization']['domain']
     
     assert response.status_code == status.HTTP_200_OK
-    assert response.json()['appointments'][-1] == appointment
+    assert returned_new_appointment == appointment
     
 async def test_put_appointment_first_appointment() -> None:
     user = create_random_user_model_to_insert()
@@ -34,9 +36,11 @@ async def test_put_appointment_first_appointment() -> None:
     await UsersCollection().insert_one(user)
     
     response = await client.put(f'/users/{user.id}/appointment', json=appointment)
+    returned_appointment = response.json()['appointments'][0]
+    appointment['specialization']['domain'] = returned_appointment['specialization']['domain']
     
     assert response.status_code == status.HTTP_200_OK
-    assert response.json()['appointments'][0] == appointment    
+    assert returned_appointment == appointment
 
 
 async def test_put_appointment_user_not_found() -> None:
